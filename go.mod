@@ -13,6 +13,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/xorm v0.7.9
 	github.com/golang/protobuf v1.3.4
+	github.com/golang/snappy v0.0.2 // indirect
 	github.com/google/go-cmp v0.2.0
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/lib/pq v1.1.1 // indirect
@@ -30,7 +31,8 @@ require (
 	github.com/shima-park/agollo v1.2.6
 	github.com/stretchr/testify v1.6.1
 	github.com/urfave/cli/v2 v2.2.0
-	go.uber.org/atomic v1.6.0
+	go.uber.org/atomic v1.7.0
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20191206172530-e9b2fee46413 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect

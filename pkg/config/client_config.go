@@ -25,7 +25,7 @@ type ClientConfig struct {
 	ATConfig                ATConfig    `yaml:"at" json:"at,omitempty"`
 }
 
-var clientConfig ClientConfig
+var clientConfig = GetDefaultClientConfig("default-client")
 
 func GetClientConfig() ClientConfig {
 	return clientConfig
@@ -59,22 +59,23 @@ func InitConf(confFile string) error {
 		return errors.WithMessagef(err, fmt.Sprintf("application configure file name{%v} suffix must be .yml", confFile))
 	}
 
-	clientConfig = ClientConfig{}
+	//clientConfig = ClientConfig{}
 	confFileStream, err := ioutil.ReadFile(confFile)
 	if err != nil {
 		return errors.WithMessagef(err, fmt.Sprintf("ioutil.ReadFile(file:%s) = error:%s", confFile, err))
 	}
-	err = yaml.Unmarshal(confFileStream, &clientConfig)
-	if err != nil {
-		return errors.WithMessagef(err, fmt.Sprintf("yaml.Unmarshal() = error:%s", err))
-	}
+	//err = yaml.Unmarshal(confFileStream, &clientConfig)
+	//if err != nil {
+	//	return errors.WithMessagef(err, fmt.Sprintf("yaml.Unmarshal() = error:%s", err))
+	//}
 
-	(&clientConfig).GettyConfig.CheckValidity()
-	(&clientConfig).ATConfig.CheckValidity()
+	//(&clientConfig).GettyConfig.CheckValidity()
+	//(&clientConfig).ATConfig.CheckValidity()
 
-	if clientConfig.ATConfig.DSN != "" {
-		cache.SetTableMetaCache(cache.NewMysqlTableMetaCache(clientConfig.ATConfig.DSN))
-	}
+	//if clientConfig.ATConfig.DSN != "" {
+	//	cache.SetTableMetaCache(cache.NewMysqlTableMetaCache(clientConfig.ATConfig.DSN))
+	//}
+	initCommonConf(confFileStream)
 	return nil
 }
 

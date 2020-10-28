@@ -14,6 +14,7 @@ import (
 	"github.com/transaction-wg/seata-golang/pkg/config"
 	context2 "github.com/transaction-wg/seata-golang/pkg/context"
 	"github.com/transaction-wg/seata-golang/pkg/util/log"
+	syslog "log"
 )
 
 const (
@@ -87,13 +88,19 @@ func (gtx *DefaultGlobalTransaction) BeginWithTimeoutAndName(timeout int32, name
 	if gtx.Xid != "" {
 		return errors.New("xid should be empty")
 	}
+	syslog.Printf("ctx:%v",ctx)
 	if ctx.InGlobalTransaction() {
 		return errors.New("xid should be empty")
 	}
+
+	syslog.Printf("befor xid:%s","")
 	xid, err := gtx.transactionManager.Begin("", "", name, timeout)
+
+	syslog.Printf("after xid:%s",xid)
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	syslog.Printf("xid:%s",xid)
 	gtx.Xid = xid
 	gtx.Status = meta.GlobalStatusBegin
 	ctx.Bind(xid)

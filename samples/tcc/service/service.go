@@ -1,8 +1,8 @@
-package service
+package main
 
 import (
 	"context"
-	"fmt"
+	"log"
 )
 
 import (
@@ -14,6 +14,7 @@ type Service struct {
 }
 
 func (svc *Service) TCCCommitted(ctx context.Context) error {
+	log.Print("xxxxxxxxxxxxxxxxxxxxxxx")
 	rootContext := ctx.(*context2.RootContext)
 	businessActionContextA := &context2.BusinessActionContext{
 		RootContext:   rootContext,
@@ -27,23 +28,25 @@ func (svc *Service) TCCCommitted(ctx context.Context) error {
 		ActionContext: make(map[string]interface{}),
 	}
 	businessActionContextB.ActionContext["hello"] = "hello world,this is from BusinessActionContext B"
-
-	resultA, err := TccProxyServiceA.Try(businessActionContextA)
+	businessActionContextA.GetXID()
+	/*
+	resultA, err := serviceA.TccProxyServiceA.Try(businessActionContextA)
 	fmt.Printf("result A is :%v", resultA)
 	if err != nil {
 		return err
 	}
 
-	resultB, err := TccProxyServiceB.Try(businessActionContextB)
+	resultB, err := serviceB.TccProxyServiceB.Try(businessActionContextB)
 	fmt.Printf("result B is :%v", resultB)
 	if err != nil {
 		return err
 	}
-
+	*/
 	return nil
 }
 
 func (svc *Service) TCCCanceled(ctx context.Context) error {
+	log.Println("TCCCanceled....................")
 	rootContext := ctx.(*context2.RootContext)
 	businessActionContextA := &context2.BusinessActionContext{
 		RootContext:   rootContext,
@@ -56,19 +59,21 @@ func (svc *Service) TCCCanceled(ctx context.Context) error {
 		ActionContext: make(map[string]interface{}),
 	}
 	businessActionContextC.ActionContext["hello"] = "hello world,this is from BusinessActionContext C"
-
-	resultA, err := TccProxyServiceA.Try(businessActionContextA)
+	/*
+	resultA, err := serviceA.TccProxyServiceA.Try(businessActionContextA)
 	fmt.Printf("result A is :%v", resultA)
 	if err != nil {
 		return err
 	}
 
-	resultC, err := TccProxyServiceC.Try(businessActionContextC)
+	resultC, err := serviceC.TccProxyServiceC.Try(businessActionContextC)
 	fmt.Printf("result C is :%v", resultC)
 	if err != nil {
 		return err
 	}
 
+
+	 */
 	return nil
 }
 
@@ -104,5 +109,5 @@ func init() {
 }
 
 var ProxySvc = &ProxyService{
-	Service: service,
+	Service:      service,
 }

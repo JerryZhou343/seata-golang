@@ -13,6 +13,7 @@ import (
 	context2 "github.com/transaction-wg/seata-golang/pkg/context"
 	"github.com/transaction-wg/seata-golang/pkg/proxy"
 	"github.com/transaction-wg/seata-golang/pkg/util/log"
+	syslog "log"
 )
 
 type GlobalTransactionProxyService interface {
@@ -45,12 +46,13 @@ func Implement(v GlobalTransactionProxyService) {
 				returnValues             = make([]reflect.Value, 0)
 				suspendedResourcesHolder *SuspendedResourcesHolder
 			)
-
+			syslog.Print("here ===========")
 			if txInfo == nil {
 				// testing phase, this problem should be resolved
 				panic(errors.New("transactionInfo does not exist"))
 			}
 
+			syslog.Printf("here ===========[%v]", methodDesc)
 			inNum := len(in)
 			if inNum+1 != methodDesc.ArgsNum {
 				// testing phase, this problem should be resolved
@@ -68,9 +70,10 @@ func Implement(v GlobalTransactionProxyService) {
 				args = append(args, in[i].Interface())
 			}
 
+			syslog.Print("here ===========")
 			tx := GetCurrentOrCreate(invCtx)
 			defer tx.Resume(suspendedResourcesHolder, invCtx)
-
+			syslog.Printf("%v",txInfo)
 			switch txInfo.Propagation {
 			case NOT_SUPPORTED:
 				suspendedResourcesHolder, _ = tx.Suspend(true, invCtx)
