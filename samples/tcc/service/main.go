@@ -63,7 +63,7 @@ func (l logger) Debugf(fmt string, args ...interface{}) {
 	return
 }
 
-var l getty.Logger = &logger{}
+var _ getty.Logger = &logger{}
 
 func main() {
 	r := gin.Default()
@@ -81,7 +81,7 @@ func main() {
 
 	r.GET("/commit", func(c *gin.Context) {
 		log.Print(".................")
-		if ProxySvc.TCCCommitted != nil{
+		if ProxySvc.TCCCommitted != nil {
 			ProxySvc.TCCCommitted(c)
 		}
 		c.JSON(200, gin.H{

@@ -73,7 +73,7 @@ func Implement(v GlobalTransactionProxyService) {
 			syslog.Print("here ===========")
 			tx := GetCurrentOrCreate(invCtx)
 			defer tx.Resume(suspendedResourcesHolder, invCtx)
-			syslog.Printf("%v",txInfo)
+			syslog.Printf("%v", txInfo)
 			switch txInfo.Propagation {
 			case NOT_SUPPORTED:
 				suspendedResourcesHolder, _ = tx.Suspend(true, invCtx)
