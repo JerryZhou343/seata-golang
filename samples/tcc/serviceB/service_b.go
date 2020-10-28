@@ -23,7 +23,7 @@ func (svc *ServiceB) Confirm(ctx *context.BusinessActionContext) bool {
 	word := ctx.ActionContext["hello"]
 	fmt.Println(word)
 	fmt.Println("Service B confirmed!")
-	return true
+	return false
 }
 
 func (svc *ServiceB) Cancel(ctx *context.BusinessActionContext) bool {

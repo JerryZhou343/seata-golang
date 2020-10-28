@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	getty "github.com/apache/dubbo-getty"
 	"github.com/gin-gonic/gin"
 	"github.com/transaction-wg/seata-golang/pkg"
 	"github.com/transaction-wg/seata-golang/pkg/config"
@@ -66,7 +65,7 @@ func (l logger) Debugf(fmt string, args ...interface{}) {
 
 func main() {
 	r := gin.Default()
-	getty.SetLogger(&logger{})
+	//getty.SetLogger(&logger{})
 	//config.InitConfWithDefault("testService")
 	config.InitConf(os.Args[1])
 	pkg.NewRpcClient()
