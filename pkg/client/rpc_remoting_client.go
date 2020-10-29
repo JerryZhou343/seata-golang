@@ -82,7 +82,7 @@ func (client *RpcRemoteClient) OnClose(session getty.Session) {
 
 // OnMessage ...
 func (client *RpcRemoteClient) OnMessage(session getty.Session, pkg interface{}) {
-	log.Info("received message:{%v}", pkg)
+	log.Infof("received message:{%s}", pkg)
 	rpcMessage, ok := pkg.(protocal.RpcMessage)
 	if ok {
 		heartBeat, isHeartBeat := rpcMessage.Body.(protocal.HeartBeatMessage)
@@ -114,7 +114,7 @@ func (client *RpcRemoteClient) OnCron(session getty.Session) {
 
 func (client *RpcRemoteClient) onMessage(rpcMessage protocal.RpcMessage, serverAddress string) {
 	msg := rpcMessage.Body.(protocal.MessageTypeAware)
-	log.Infof("onMessage: %v", msg)
+	log.Infof("onMessage: %s", msg)
 	switch msg.GetTypeCode() {
 	case protocal.TypeBranchCommit:
 		client.BranchCommitRequestChannel <- model.RpcRMMessage{
@@ -180,7 +180,7 @@ func (client *RpcRemoteClient) sendAsyncRequest(session getty.Session, msg inter
 	if err != nil {
 		client.futures.Delete(rpcMessage.Id)
 	}
-	log.Infof("send message : %v,session:%s", rpcMessage, session.Stat())
+	log.Infof("send message A: %s,session:%s", rpcMessage, session.Stat())
 
 	if timeout > time.Duration(0) {
 		select {

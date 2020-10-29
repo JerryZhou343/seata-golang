@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	getty "github.com/apache/dubbo-getty"
 	"github.com/gin-gonic/gin"
 	"github.com/transaction-wg/seata-golang/pkg"
 	"github.com/transaction-wg/seata-golang/pkg/config"
+	bc "github.com/transaction-wg/seata-golang/pkg/context"
 	"log"
 	"os"
 )
@@ -89,7 +91,19 @@ func main() {
 		})
 	})
 	r.GET("/rollback", func(c *gin.Context) {
-		ProxySvc.TCCCanceled(c)
+		xid, find := c.GetQuery("xid")
+		if find == false {
+			log.Print("not found xid")
+			return
+		}
+		log.Printf("xid:%s", xid)
+		ctx := context.WithValue(context.TODO(), bc.KEY_XID, xid)
+		rctx := bc.NewRootContext(ctx)
+		businessActionContext := &bc.BusinessActionContext{
+			RootContext:   rctx,
+			ActionContext: make(map[string]interface{}),
+		}
+		ProxySvc.TCCCanceled(businessActionContext)
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})

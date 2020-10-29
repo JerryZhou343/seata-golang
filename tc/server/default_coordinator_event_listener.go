@@ -26,7 +26,7 @@ func (coordinator *DefaultCoordinator) OnClose(session getty.Session) {
 }
 
 func (coordinator *DefaultCoordinator) OnMessage(session getty.Session, pkg interface{}) {
-	log.Debugf("received message:{%v}", pkg)
+	log.Debugf("received message:{%s}", pkg)
 	rpcMessage, ok := pkg.(protocal.RpcMessage)
 	if ok {
 		_, isRegTM := rpcMessage.Body.(protocal.RegisterTMRequest)

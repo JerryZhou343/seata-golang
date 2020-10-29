@@ -115,3 +115,57 @@ const (
 	 */
 	TypeRmDeleteUndolog = 111
 )
+
+func(m MessageType)String()string{
+	switch m {
+	case TypeGlobalBegin:
+		return "TypeGlobalBegin"
+	case  TypeGlobalBeginResult:
+		return "TypeGlobalBeginResult"
+	case TypeGlobalCommit:
+		return "TypeGlobalCommit"
+	case TypeGlobalCommitResult:
+		return "TypeGlobalCommitResult"
+	case TypeGlobalRollback:
+		return "TypeGlobalRollback"
+	case TypeGlobalRollbackResult:
+		return "TypeGlobalRollbackResult"
+	case TypeGlobalStatus:
+		return "TypeGlobalStatus"
+	case TypeGlobalReportResult:
+		return "TypeGlobalReportResult"
+	case TypeGlobalLockQuery:
+		return "TypeGlobalLockQuery"
+	case TypeGlobalLockQueryResult:
+		return "TypeGlobalLockQueryResult"
+	case TypeBranchCommit:
+		return "TypeBranchCommit"
+	case TypeBranchCommitResult:
+		return "TypeBranchCommitResult"
+	case TypeBranchRollback:
+		return "TypeBranchRollback"
+	case TypeBranchRollbackResult:
+		return "TypeBranchRollbackResult"
+	case TypeBranchRegister:
+		return "TypeBranchRegister"
+	case TypeBranchRegisterResult:
+		return "TypeBranchRegisterResult"
+	case TypeBranchStatusReport:
+		return "TypeBranchStatusReport"
+	case TypeSeataMerge:
+		return "TypeSeataMerge"
+	case TypeSeataMergeResult:
+		return "TypeSeataMergeResult"
+	case TypeRegClt:
+		return "TypeRegClt"
+	case TypeRegCltResult:
+		return "TypeRegCltResult"
+	case TypeRegRm:
+		return "TypeRegRm"
+	case TypeRegRmResult:
+		return "TypeRegRmResult"
+	case TypeRmDeleteUndolog:
+		return "TypeRmDeleteUndolog"
+	}
+	return ""
+}
