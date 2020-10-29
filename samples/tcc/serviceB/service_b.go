@@ -17,7 +17,7 @@ func (svc *ServiceB) Try(ctx *context.BusinessActionContext) (bool, error) {
 	word := ctx.ActionContext["hello"]
 	fmt.Println(word)
 	fmt.Println("Service B Tried!")
-	return false, errors.New("service B try Failed")
+	return true, errors.New("service B try Failed")
 }
 
 func (svc *ServiceB) Confirm(ctx *context.BusinessActionContext) bool {
