@@ -68,6 +68,7 @@ func (svc *Service) TCCCommitted(ctx context.Context) error {
 
 func (svc *Service) TCCCanceled(ctx context.Context) error {
 	log.Println("TCCCanceled....................")
+	rootContext := ctx.(*context2.RootContext)
 	//rootContext := ctx.(*context2.RootContext)
 	/*
 		businessActionContextA := &context2.BusinessActionContext{
@@ -93,6 +94,24 @@ func (svc *Service) TCCCanceled(ctx context.Context) error {
 			return err
 		}
 	*/
+
+	const (
+		svcA = "http://127.0.0.1:81"
+		svcC = "http://127.0.0.1:83"
+		path = "/try"
+	)
+	xid, find := rootContext.Get(context2.KEY_XID)
+	if find != true {
+		log.Printf("failed to find xid")
+		return fmt.Errorf("not found xid")
+	}
+	rsp, err := http.DefaultClient.Get(fmt.Sprintf("%s?xid=%s", svcA+path, xid))
+	if err != nil {
+		log.Printf("err:[%v]", err)
+	} else {
+		log.Printf("a.status:[%v]", rsp.Status)
+	}
+	http.DefaultClient.Get(fmt.Sprintf("%s?xid=%s", svcC+path, xid))
 
 	return nil
 }

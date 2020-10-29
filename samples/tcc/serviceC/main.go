@@ -1,13 +1,12 @@
 package main
 
 import (
+	"context"
 	"github.com/gin-gonic/gin"
 	"github.com/transaction-wg/seata-golang/pkg"
 	"github.com/transaction-wg/seata-golang/pkg/config"
-	"github.com/transaction-wg/seata-golang/samples/tcc/service"
-	"github.com/transaction-wg/seata-golang/samples/tcc/serviceA"
-	"github.com/transaction-wg/seata-golang/samples/tcc/serviceB"
-	"github.com/transaction-wg/seata-golang/samples/tcc/serviceC"
+	bc "github.com/transaction-wg/seata-golang/pkg/context"
+	"log"
 	"os"
 )
 
@@ -28,9 +27,20 @@ func main() {
 	//tcc.ImplementTCC(serviceB.TccProxyServiceB)
 	tcc.ImplementTCC(TccProxyServiceC)
 
-	r.GET("/commit", func(c *gin.Context) {
-		//service.ProxySvc.TCCCommitted(c)
-		TccProxyServiceC.Try(c)
+	r.GET("/try", func(c *gin.Context) {
+		xid, find := c.GetQuery("xid")
+		if find == false {
+			log.Print("not found xid")
+			return
+		}
+		log.Printf("xid:%s", xid)
+		ctx := context.WithValue(context.TODO(), bc.KEY_XID, xid)
+		rctx := bc.NewRootContext(ctx)
+		businessActionContextC := &bc.BusinessActionContext{
+			RootContext:   rctx,
+			ActionContext: make(map[string]interface{}),
+		}
+		TccProxyServiceC.Try(businessActionContextC)
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})

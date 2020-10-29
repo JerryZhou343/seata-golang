@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -17,7 +16,7 @@ func (svc *ServiceB) Try(ctx *context.BusinessActionContext) (bool, error) {
 	word := ctx.ActionContext["hello"]
 	fmt.Println(word)
 	fmt.Println("Service B Tried!")
-	return true, errors.New("service B try Failed")
+	return true, nil
 }
 
 func (svc *ServiceB) Confirm(ctx *context.BusinessActionContext) bool {
