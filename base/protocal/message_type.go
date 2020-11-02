@@ -116,11 +116,11 @@ const (
 	TypeRmDeleteUndolog = 111
 )
 
-func(m MessageType)String()string{
+func (m MessageType) String() string {
 	switch m {
 	case TypeGlobalBegin:
 		return "TypeGlobalBegin"
-	case  TypeGlobalBeginResult:
+	case TypeGlobalBeginResult:
 		return "TypeGlobalBeginResult"
 	case TypeGlobalCommit:
 		return "TypeGlobalCommit"

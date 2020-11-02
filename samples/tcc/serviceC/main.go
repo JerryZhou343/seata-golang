@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/transaction-wg/seata-golang/pkg"
 	"github.com/transaction-wg/seata-golang/pkg/config"
 	bc "github.com/transaction-wg/seata-golang/pkg/context"
 	"log"
+	"net/http"
 	"os"
 )
 
@@ -41,9 +43,10 @@ func main() {
 			ActionContext: make(map[string]interface{}),
 		}
 		TccProxyServiceC.Try(businessActionContextC)
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusExpectationFailed, gin.H{
 			"message": "pong",
 		})
+		os.Exit(-1)
 	})
 	r.GET("/rollback", func(c *gin.Context) {
 		//service.ProxySvc.TCCCanceled(c)
@@ -51,5 +54,5 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.Run(":83")
+	r.Run(fmt.Sprintf(":%s", os.Args[2]))
 }

@@ -11,8 +11,7 @@ type RpcMessage struct {
 	Body        interface{}
 }
 
-
-func (r RpcMessage)String()string{
+func (r RpcMessage) String() string {
 	return fmt.Sprintf("id:%d messageType:%s codec: %d compressor: %d head:%v body:%v",
 		r.Id, MessageType(r.MessageType), r.Codec, r.Compressor, r.HeadMap, r.Body)
 }

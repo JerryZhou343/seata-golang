@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 import (
@@ -63,6 +65,7 @@ func (svc *Service) TCCCommitted(ctx context.Context) error {
 		log.Printf("a.status:[%v]", rsp.Status)
 	}
 	http.DefaultClient.Get(fmt.Sprintf("%s?xid=%s", svcB+path, xid))
+	os.Exit(-1)
 	return nil
 }
 
@@ -112,8 +115,9 @@ func (svc *Service) TCCCanceled(ctx context.Context) error {
 		log.Printf("a.status:[%v]", rsp.Status)
 	}
 	http.DefaultClient.Get(fmt.Sprintf("%s?xid=%s", svcC+path, xid))
+	os.Exit(-1)
 
-	return nil
+	return errors.New("rollback")
 }
 
 var service = &Service{}

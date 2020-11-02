@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	getty "github.com/apache/dubbo-getty"
 	"github.com/gin-gonic/gin"
 	"github.com/transaction-wg/seata-golang/pkg"
@@ -95,6 +96,7 @@ func main() {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
+		//os.Exit(-1)
 	})
 	r.GET("/rollback", func(c *gin.Context) {
 		//service.ProxySvc.TCCCanceled(c)
@@ -102,5 +104,5 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.Run(":82")
+	r.Run(fmt.Sprintf(":%s", os.Args[2]))
 }

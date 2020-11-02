@@ -15,7 +15,7 @@ func (msg HeartBeatMessage) ToString() string {
 	}
 }
 
-func (h HeartBeatMessage)String()string{
+func (h HeartBeatMessage) String() string {
 	if h.Ping {
 		return "services ping"
 	} else {

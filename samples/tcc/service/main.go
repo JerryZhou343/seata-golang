@@ -89,7 +89,8 @@ func main() {
 		})
 	})
 	r.GET("/rollback", func(c *gin.Context) {
-		ProxySvc.TCCCanceled(c)
+		err := ProxySvc.TCCCanceled(c)
+		log.Printf("============>%v", err)
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
